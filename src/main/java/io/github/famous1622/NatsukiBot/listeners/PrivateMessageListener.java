@@ -13,7 +13,6 @@ public class PrivateMessageListener extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		if (event.isFromType(ChannelType.PRIVATE)) {
 			if (event.getMessage().getContentDisplay().equalsIgnoreCase("I understand the rules of the comedy-dark channel")) {
-				System.out.println("asdasdasd");
 				event.getMessage().addReaction("👌").queue();
 				Member member = ComedyDarkCommand.guild.getMember(event.getAuthor());
 				Role cdrole = ComedyDarkCommand.guild.getRolesByName("comedy-dark", true).get(0);
