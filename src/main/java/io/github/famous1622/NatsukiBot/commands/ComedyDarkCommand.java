@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.github.famous1622.NatsukiBot.CONSTANTS;
 import io.github.famous1622.NatsukiBot.types.Command;
+import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -40,5 +41,9 @@ public class ComedyDarkCommand implements Command {
 				guilds.put(author.getId(), guild);
 			});
 		}
+	}
+	@Override
+	public PrivilegeLevel getRequiredLevel() {
+		return PrivilegeLevel.USER;
 	}
 }
