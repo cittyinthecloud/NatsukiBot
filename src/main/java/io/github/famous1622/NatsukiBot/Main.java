@@ -5,6 +5,7 @@ import javax.security.auth.login.LoginException;
 import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
+import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerSuggestionsListener;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -21,6 +22,7 @@ public class Main {
 					.addEventListener(new CommandListener())
 					.addEventListener(new PrivateMessageListener())
 					.addEventListener(new ServerSuggestionsListener())
+					.addEventListener(new ServerJoinListener())
 					.buildBlocking();
 			CommandListener.addCommand(new ComedyDarkCommand());
 		}
