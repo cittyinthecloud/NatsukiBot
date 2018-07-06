@@ -4,6 +4,7 @@ import javax.security.auth.login.LoginException;
 
 import io.github.famous1622.NatsukiBot.commands.AddRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
+import io.github.famous1622.NatsukiBot.commands.DisableRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
@@ -29,6 +30,7 @@ public class Main {
 			CommandListener.addCommand(new ComedyDarkCommand());
 			CommandListener.addCommand(new AddRoleCommand());
 			CommandListener.addCommand(new RoleCommand());
+			CommandListener.addCommand(new DisableRoleCommand());
 		}
 	}
 }

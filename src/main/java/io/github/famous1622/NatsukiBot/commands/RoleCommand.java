@@ -15,6 +15,7 @@ import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class RoleCommand implements Command {
+	public static boolean commandDisabled = false;
 
 	@Override
 	public String getCommand() {
@@ -33,11 +34,19 @@ public class RoleCommand implements Command {
 			RoleConfiguration roleConfig = RoleConfiguration.getConfig();
 			if (roleConfig.containsKey(arg.toLowerCase())) {
 				Role role = guild.getRoleById(roleConfig.getProperty(arg.toLowerCase()));
-				guild.getController().addSingleRoleToMember(member,role).queue();
-				event.getMessage().delete().queue();
-				event.getChannel().sendMessage("Added role: "+role.getName()).queue((message) -> {
-					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-				});
+				if (member.getRoles().contains(role)) {
+					guild.getController().removeSingleRoleFromMember(member,role).queue();
+					event.getMessage().delete().queue();
+					event.getChannel().sendMessage("Removed role: "+role.getName()).queue((message) -> {
+						message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
+					});
+				} else {
+					guild.getController().addSingleRoleToMember(member,role).queue();
+					event.getMessage().delete().queue();
+					event.getChannel().sendMessage("Added role: "+role.getName()).queue((message) -> {
+						message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
+					});
+				}
 			}
 		} catch (IOException e) {
 			event.getChannel().sendMessage("Help I'm a potato").queue();
@@ -48,6 +57,9 @@ public class RoleCommand implements Command {
 
 	@Override
 	public PrivilegeLevel getRequiredLevel() {
+		if (commandDisabled) {
+			return PrivilegeLevel.ADMIN;
+		}
 		return PrivilegeLevel.USER;
 	}
 }
