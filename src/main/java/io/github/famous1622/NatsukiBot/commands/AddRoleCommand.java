@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.github.famous1622.NatsukiBot.config.RoleConfiguration;
+import io.github.famous1622.NatsukiBot.config.IamConfiguration;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Guild;
@@ -31,7 +31,7 @@ public class AddRoleCommand implements Command {
 		if (!roles.isEmpty()) {
 			Role role = roles.get(0);
 			try {
-				RoleConfiguration roleConfig = RoleConfiguration.getConfig();
+				IamConfiguration roleConfig = IamConfiguration.getConfig();
 				
 				roleConfig.setProperty(arg.toLowerCase(), role.getId());
 				roleConfig.saveToDisk();

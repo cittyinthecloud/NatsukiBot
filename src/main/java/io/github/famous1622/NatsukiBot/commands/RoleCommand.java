@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.github.famous1622.NatsukiBot.config.RoleConfiguration;
+import io.github.famous1622.NatsukiBot.config.IamConfiguration;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Guild;
@@ -31,7 +31,7 @@ public class RoleCommand implements Command {
 		Guild guild = event.getGuild();
 		Member member = guild.getMember(event.getAuthor());
 		try {
-			RoleConfiguration roleConfig = RoleConfiguration.getConfig();
+			IamConfiguration roleConfig = IamConfiguration.getConfig();
 			if (roleConfig.containsKey(arg.toLowerCase())) {
 				Role role = guild.getRoleById(roleConfig.getProperty(arg.toLowerCase()));
 				if (member.getRoles().contains(role)) {

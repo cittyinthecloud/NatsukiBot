@@ -1,5 +1,8 @@
 package io.github.famous1622.NatsukiBot.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -18,5 +21,13 @@ public class BotUtils {
 		} else {
 			return PrivilegeLevel.USER;
 		}
+	}
+	
+	public static List<Role> idListToRoleList(Guild guild, List<String> ids ){
+		List<Role> out = new ArrayList<Role>(ids.size());
+		for (String id : ids) {
+			out.add(guild.getRoleById(id));
+		}
+		return out;
 	}
 }

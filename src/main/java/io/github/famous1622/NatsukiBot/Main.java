@@ -9,6 +9,7 @@ import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
+import io.github.famous1622.NatsukiBot.listeners.ServerLeaveListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerSuggestionsListener;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -26,6 +27,7 @@ public class Main {
 					.addEventListener(new PrivateMessageListener())
 					.addEventListener(new ServerSuggestionsListener())
 					.addEventListener(new ServerJoinListener())
+					.addEventListener(new ServerLeaveListener())
 					.buildBlocking();
 			CommandListener.addCommand(new ComedyDarkCommand());
 			CommandListener.addCommand(new AddRoleCommand());

@@ -25,3 +25,4 @@ target/
 *.class
 *.class
 roles.xml
+rrconfig.xml

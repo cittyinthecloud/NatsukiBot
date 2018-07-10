@@ -9,33 +9,31 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 @SuppressWarnings("serial")
-public class RoleConfiguration extends Properties {
-	private static RoleConfiguration theOne = null;
+public class IamConfiguration extends Properties {
+	private static IamConfiguration theOne = null;
 	private static final Path rolesPath = Paths.get("roles.xml");
 	
-	private RoleConfiguration() throws IOException {
+	private IamConfiguration() throws IOException {
 		super();
 		loadFromDisk();
 	}
 	
-	public static RoleConfiguration getConfig() throws IOException {
+	public static IamConfiguration getConfig() throws IOException {
 		if (theOne == null) {
-			theOne = new RoleConfiguration();	
+			theOne = new IamConfiguration();	
 		}
 		return theOne;
 	}
 	
-	public RoleConfiguration saveToDisk() throws IOException {
+	public void saveToDisk() throws IOException {
 		FileOutputStream file = new FileOutputStream(rolesPath.toFile());
 		this.storeToXML(file, null);
-		return this;
 	}
 	
-	public RoleConfiguration loadFromDisk() throws IOException {
+	public void loadFromDisk() throws IOException {
 		if (Files.exists(rolesPath)) {
 			FileInputStream file = new FileInputStream(rolesPath.toFile());
 			this.loadFromXML(file);
 		}
-		return this;
 	}
 }

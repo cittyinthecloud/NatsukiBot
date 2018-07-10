@@ -21,4 +21,5 @@ public class CONSTANTS {
 			"\n" +
 			"In order to obtain access to all of the server features, please take the time to read the instructions in #introduction." +
 			"When you are ready, start typing in #welcome!";
+	public static final String WELCOMEBACKMESSAGE = "Welcome back to the Doki Doki Modding Club!";
 }
