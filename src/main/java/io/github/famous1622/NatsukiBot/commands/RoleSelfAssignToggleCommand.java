@@ -21,12 +21,9 @@ public class RoleSelfAssignToggleCommand implements Command {
 	}
 
 	@Override
-		arguments.addAll(Arrays.asList(event.getMessage().getContentRaw().split(" ")));
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		String arg = String.join(" ", arguments);
 		Guild guild = event.getGuild();
-			Role role = roles.get(0);
-			try {
 		try {
 			IamConfiguration roleConfig = IamConfiguration.getConfig();
 			if (roleConfig.containsKey(arg.toLowerCase())) {
