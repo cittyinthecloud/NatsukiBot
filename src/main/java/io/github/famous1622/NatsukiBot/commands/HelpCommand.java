@@ -32,7 +32,10 @@ public class HelpCommand implements Command {
 		commands.stream()
 				.filter(command -> BotUtils.memberHasPrivilege(member, command.getRequiredLevel()))
 				.forEachOrdered(command -> {
-					message.append("\n").append(command.getCommand()).append("\n    ").append(command.getHelpMessage()).append('\n');
+					message.append("\n")
+						   .append(command.getCommand())
+						   .append("\n    ").append(command.getHelpMessage())
+						   .append('\n');
 				});
 		
 		event.getMessage().delete().queue();

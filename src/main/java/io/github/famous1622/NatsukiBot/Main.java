@@ -45,7 +45,7 @@ public class Main {
 			
 			CommandListener.addCommand(new HelpCommand());
 			
-			GulagManager.getManager().loadFromDisk(jda);
+			GulagManager.getManager().reload(jda);
 			
 			Timer gulagTimer = new Timer(true);
 			gulagTimer.scheduleAtFixedRate(new TimerTask() {

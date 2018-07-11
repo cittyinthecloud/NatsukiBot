@@ -64,7 +64,7 @@ public class GulagManager {
 		});
 	}
 	
-	public void loadFromDisk(JDA jda) {
+	public void reload(JDA jda) {
 		try {
 			GulagDataConfiguration datafile = GulagDataConfiguration.getConfig();
 			datafile.forEach((key,value) -> {

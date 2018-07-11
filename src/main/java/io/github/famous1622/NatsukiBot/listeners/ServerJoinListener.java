@@ -33,7 +33,7 @@ public class ServerJoinListener extends ListenerAdapter
 				event.getGuild().getController().addRolesToMember(member, roles)
 												.reason("Restore pre-leave roles")
 												//to update Gulags (if they were gulaged, they're null now, this reloads that)
-												.queue((v) -> GulagManager.getManager().loadFromDisk(member.getJDA()));
+												.queue((v) -> GulagManager.getManager().reload(member.getJDA()));
 			} else {
 				String username = user.getAsMention();
 				TextChannel channel = event.getGuild().getSystemChannel();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.famous1622.NatsukiBot.config.RestoreRoleConfiguration;
+import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.utils.JSONUtils;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
@@ -25,6 +26,8 @@ public class ServerLeaveListener extends ListenerAdapter {
 			String packed = JSONUtils.packList(ids);
 			rrconfig.setProperty(member.getUser().getId(), packed);
 			rrconfig.saveToDisk();
+			//Reload gulags, because a member doesn't exist.
+			GulagManager.getManager().reload(event.getJDA());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
