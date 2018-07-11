@@ -24,3 +24,4 @@ hs_err_pid*
 target/
 roles.xml
 rrconfig.xml
+gulag.xml

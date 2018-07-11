@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<entry key="{&quot;guildId&quot;:&quot;462825167333228544&quot;,&quot;userId&quot;:&quot;302172641731674112&quot;}">{"roles":["462825496011472906"],"timesInGulag":1,"unGulagTime":1531332649428,"guildId":"462825167333228544"}</entry>
-<entry key="{&quot;guildId&quot;:&quot;462825167333228544&quot;,&quot;userId&quot;:&quot;227752334632026113&quot;}">{"roles":[],"timesInGulag":1,"unGulagTime":1531332725446}</entry>
-<entry key="{&quot;guildId&quot;:&quot;462825167333228544&quot;,&quot;userId&quot;:&quot;285494859794612237&quot;}">{"roles":["464712340948910081","462825496011472906"],"timesInGulag":10,"unGulagTime":0,"guildId":"462825167333228544"}</entry>
-</properties>
