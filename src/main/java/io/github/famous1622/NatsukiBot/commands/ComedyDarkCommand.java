@@ -21,7 +21,7 @@ public class ComedyDarkCommand implements Command {
 		return "comedy-dark";
 	}
 
-	public void onCommand(MessageReceivedEvent event) {
+	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		Guild guild = event.getGuild();
 		GuildController guildController = new GuildController(guild);
 		

@@ -1,16 +1,21 @@
 package io.github.famous1622.NatsukiBot;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.security.auth.login.LoginException;
 
-import io.github.famous1622.NatsukiBot.commands.AddRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
 import io.github.famous1622.NatsukiBot.commands.DisableRoleCommand;
+import io.github.famous1622.NatsukiBot.commands.GulagCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleCommand;
+import io.github.famous1622.NatsukiBot.commands.RoleSelfAssignToggleCommand;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerLeaveListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerSuggestionsListener;
+import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -30,9 +35,20 @@ public class Main {
 					.addEventListener(new ServerLeaveListener())
 					.buildBlocking();
 			CommandListener.addCommand(new ComedyDarkCommand());
-			CommandListener.addCommand(new AddRoleCommand());
+			CommandListener.addCommand(new RoleSelfAssignToggleCommand());
 			CommandListener.addCommand(new RoleCommand());
 			CommandListener.addCommand(new DisableRoleCommand());
+			CommandListener.addCommand(new GulagCommand());
+			
+			GulagManager.getManager().loadFromDisk(jda);
+			
+			Timer gulagTimer = new Timer(true);
+			gulagTimer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					GulagManager.getManager().syncRoles();
+				}
+			}, 5000, 30*60*1000);
 		}
 	}
 }

@@ -30,4 +30,10 @@ public class BotUtils {
 		}
 		return out;
 	}
+	
+	public static List<String> roleListToIdList(List<Role> roles){
+		List<String> out = new ArrayList<String>(roles.size());
+		roles.forEach((role) -> out.add(role.getId()));
+		return out;
+	}
 }
