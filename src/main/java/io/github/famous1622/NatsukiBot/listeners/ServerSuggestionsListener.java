@@ -19,8 +19,9 @@ public class ServerSuggestionsListener extends ListenerAdapter {
 					return;
 				}
 			}
-			event.getMessage().addReaction("⬆").complete();
-			event.getMessage().addReaction("⬇").queue();
+			event.getMessage().addReaction("⬆").queue((v)->{
+				event.getMessage().addReaction("⬇").queue();
+			});
 		}
 	}
 }
