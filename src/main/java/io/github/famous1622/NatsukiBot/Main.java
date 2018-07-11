@@ -8,6 +8,7 @@ import javax.security.auth.login.LoginException;
 import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
 import io.github.famous1622.NatsukiBot.commands.DisableRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.GulagCommand;
+import io.github.famous1622.NatsukiBot.commands.HelpCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleSelfAssignToggleCommand;
 import io.github.famous1622.NatsukiBot.commands.UngulagCommand;
@@ -41,6 +42,8 @@ public class Main {
 			CommandListener.addCommand(new DisableRoleCommand());
 			CommandListener.addCommand(new GulagCommand());
 			CommandListener.addCommand(new UngulagCommand());
+			
+			CommandListener.addCommand(new HelpCommand());
 			
 			GulagManager.getManager().loadFromDisk(jda);
 			

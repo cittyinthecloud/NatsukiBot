@@ -57,4 +57,9 @@ public class RoleCommand implements Command {
 		}
 		return PrivilegeLevel.USER;
 	}
+
+	@Override
+	public String getHelpMessage() {
+		return "assigns the user a role. Syntax: $iam [role]";
+	}
 }

@@ -24,7 +24,6 @@ public class GulagManager {
 			state.unGulagTime += milliseconds; 
 		} else {
 			state.unGulagTime = System.currentTimeMillis() + milliseconds;
-			System.out.println("Gulag for " + member.toString() + " is " + state.unGulagTime);
 		}
 		
 		sync();
@@ -50,13 +49,9 @@ public class GulagManager {
 	}
 
 	public void syncRoles() {
-		System.out.println("Syncing gulag roles");
 		gulags.forEach((member, state) -> {
 			Role gulagRole = member.getGuild().getRolesByName("Probationary", true).get(0);
 			boolean inActualGulag = member.getRoles().contains(gulagRole);
-			
-			System.out.println("Member " + member.toString() + "has the gulag role:" + inActualGulag );
-			System.out.println("state.isGulaged():" + state.isGulaged());
 			
 			if (inActualGulag && !state.isGulaged()) {	
 				member.getGuild().getController().modifyMemberRoles(member, state.roles).queue();

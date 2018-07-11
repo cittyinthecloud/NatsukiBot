@@ -46,4 +46,9 @@ public class ComedyDarkCommand implements Command {
 	public PrivilegeLevel getRequiredLevel() {
 		return PrivilegeLevel.USER;
 	}
+
+	@Override
+	public String getHelpMessage() {
+		return "toggles comedy-dark permissions";
+	}
 }

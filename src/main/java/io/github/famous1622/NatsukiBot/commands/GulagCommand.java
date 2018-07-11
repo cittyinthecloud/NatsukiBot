@@ -40,5 +40,10 @@ public class GulagCommand implements Command {
 		time = time.substring(0, time.length()-1);
 		long gulagtime = Long.parseLong(time)*60*60*1000;
 		GulagManager.getManager().addGulag(member, gulagtime);
+	}
+
+	@Override
+	public String getHelpMessage() {
+		return "gulags a member. Syntax: $gulag @Member Xh";
 	} 
 }

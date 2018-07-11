@@ -36,4 +36,8 @@ public class BotUtils {
 		roles.forEach((role) -> out.add(role.getId()));
 		return out;
 	}
+	
+	public static boolean memberHasPrivilege(Member member, PrivilegeLevel level) {
+		return getMemberLevel(member).compareTo(level)>=0;
+	}
 }

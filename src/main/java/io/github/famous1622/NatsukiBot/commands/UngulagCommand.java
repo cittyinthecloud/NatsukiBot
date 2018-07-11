@@ -13,13 +13,11 @@ public class UngulagCommand implements Command {
 
 	@Override
 	public PrivilegeLevel getRequiredLevel() {
-		// TODO Auto-generated method stub
 		return PrivilegeLevel.MOD;
 	}
 
 	@Override
 	public String getCommand() {
-		// TODO Auto-generated method stub
 		return "ungulag";
 	}
 
@@ -48,6 +46,11 @@ public class UngulagCommand implements Command {
 			message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 		});
 		
+	}
+
+	@Override
+	public String getHelpMessage() {
+		return "ungulags a member. Syntax: $ungulag @Member";
 	}
 
 }

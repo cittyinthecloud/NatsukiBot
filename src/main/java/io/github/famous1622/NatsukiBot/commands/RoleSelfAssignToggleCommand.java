@@ -46,7 +46,6 @@ public class RoleSelfAssignToggleCommand implements Command {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -55,6 +54,11 @@ public class RoleSelfAssignToggleCommand implements Command {
 	@Override
 	public PrivilegeLevel getRequiredLevel() {
 		return PrivilegeLevel.ADMIN;
+	}
+
+	@Override
+	public String getHelpMessage() {
+		return "adds or removes a role from the list allowed to be assigned with $iam";
 	}
 
 }
