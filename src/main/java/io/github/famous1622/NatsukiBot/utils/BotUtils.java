@@ -13,8 +13,9 @@ public class BotUtils {
 		Guild guild = member.getGuild();
 		Role adminRole = guild.getRolesByName("Admin", true).get(0);
 		Role modRole = guild.getRolesByName("Moderator", true).get(0);
+		Role itTeamRole = guild.getRolesByName("IT Team", true).get(0);
 		
-		if(member.getRoles().contains(adminRole)) {
+		if(member.getRoles().contains(adminRole) || member.getRoles().contains(itTeamRole)) {
 			return PrivilegeLevel.ADMIN;
 		} else if (member.getRoles().contains(modRole)) {
 			return PrivilegeLevel.MOD;
