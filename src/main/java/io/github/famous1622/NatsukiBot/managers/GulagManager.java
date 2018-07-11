@@ -1,9 +1,7 @@
 package io.github.famous1622.NatsukiBot.managers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.github.famous1622.NatsukiBot.config.GulagDataConfiguration;
 import io.github.famous1622.NatsukiBot.types.GulagState;
@@ -55,7 +53,7 @@ public class GulagManager {
 			Role gulagRole = member.getGuild().getRolesByName("Probationary", true).get(0);
 			boolean inActualGulag = member.getRoles().contains(gulagRole);
 			
-			if (inActualGulag && !state.isGulaged()) {
+			if (inActualGulag && !state.isGulaged()) {	
 				member.getGuild().getController().modifyMemberRoles(member, state.roles).queue();
 			} else if (!inActualGulag && state.isGulaged()) {
 				state.roles = member.getRoles();

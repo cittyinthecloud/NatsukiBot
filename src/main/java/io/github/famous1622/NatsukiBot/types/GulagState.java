@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
-import io.github.famous1622.NatsukiBot.utils.JSONUtils;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Role;
 
