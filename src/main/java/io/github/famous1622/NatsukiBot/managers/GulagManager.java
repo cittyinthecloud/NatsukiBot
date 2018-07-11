@@ -50,14 +50,16 @@ public class GulagManager {
 
 	public void syncRoles() {
 		gulags.forEach((member, state) -> {
-			Role gulagRole = member.getGuild().getRolesByName("Probationary", true).get(0);
-			boolean inActualGulag = member.getRoles().contains(gulagRole);
-			
-			if (inActualGulag && !state.isGulaged()) {	
-				member.getGuild().getController().modifyMemberRoles(member, state.roles).queue();
-			} else if (!inActualGulag && state.isGulaged()) {
-				state.roles = member.getRoles();
-				member.getGuild().getController().modifyMemberRoles(member, gulagRole).queue();
+			if (member != null) {
+				Role gulagRole = member.getGuild().getRolesByName("Probationary", true).get(0);
+				boolean inActualGulag = member.getRoles().contains(gulagRole);
+				
+				if (inActualGulag && !state.isGulaged()) {	
+					member.getGuild().getController().modifyMemberRoles(member, state.roles).queue();
+				} else if (!inActualGulag && state.isGulaged()) {
+					state.roles = member.getRoles();
+					member.getGuild().getController().modifyMemberRoles(member, gulagRole).queue();
+				}
 			}
 		});
 	}

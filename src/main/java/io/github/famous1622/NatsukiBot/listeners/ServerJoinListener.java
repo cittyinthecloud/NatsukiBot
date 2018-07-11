@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.github.famous1622.NatsukiBot.CONSTANTS;
 import io.github.famous1622.NatsukiBot.config.RestoreRoleConfiguration;
+import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
 import io.github.famous1622.NatsukiBot.utils.JSONUtils;
 import net.dv8tion.jda.core.entities.Member;
@@ -29,7 +30,10 @@ public class ServerJoinListener extends ListenerAdapter
 				List<String> unpacked = JSONUtils.unpackStringList(packed);
 				System.out.println(unpacked.size());
 				List<Role> roles = BotUtils.idListToRoleList(event.getGuild(), unpacked);
-				event.getGuild().getController().addRolesToMember(member, roles).queue();
+				event.getGuild().getController().addRolesToMember(member, roles)
+												.reason("Restore pre-leave roles")
+												//to update Gulags (if they were gulaged, they're null now, this reloads that)
+												.queue((v) -> GulagManager.getManager().loadFromDisk(member.getJDA()));
 			} else {
 				String username = user.getAsMention();
 				TextChannel channel = event.getGuild().getSystemChannel();
