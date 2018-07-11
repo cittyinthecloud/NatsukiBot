@@ -1,10 +1,11 @@
 package io.github.famous1622.NatsukiBot.commands;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.github.famous1622.NatsukiBot.CONSTANTS;
-import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.types.Command;
+import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -14,13 +15,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
 public class ComedyDarkCommand implements Command {
-	public static Guild guild = Main.jda.getGuilds().get(0);
+	public static HashMap<String, Guild> guilds = new HashMap<String, Guild>();
 
 	public String getCommand() {
 		return "comedy-dark";
 	}
 
-	public void onCommand(MessageReceivedEvent event) {
+	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		Guild guild = event.getGuild();
 		GuildController guildController = new GuildController(guild);
 		
@@ -37,8 +38,17 @@ public class ComedyDarkCommand implements Command {
 		} else {
 			author.openPrivateChannel().queue((pchannel) -> {
 				pchannel.sendMessage(CONSTANTS.COMEDYDARKMESSAGE).queue();
-				ComedyDarkCommand.guild = member.getGuild();
+				guilds.put(author.getId(), guild);
 			});
 		}
+	}
+	@Override
+	public PrivilegeLevel getRequiredLevel() {
+		return PrivilegeLevel.USER;
+	}
+
+	@Override
+	public String getHelpMessage() {
+		return "toggles comedy-dark permissions";
 	}
 }
