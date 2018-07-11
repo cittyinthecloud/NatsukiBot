@@ -10,6 +10,7 @@ import io.github.famous1622.NatsukiBot.commands.DisableRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.GulagCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleSelfAssignToggleCommand;
+import io.github.famous1622.NatsukiBot.commands.UngulagCommand;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
@@ -39,6 +40,7 @@ public class Main {
 			CommandListener.addCommand(new RoleCommand());
 			CommandListener.addCommand(new DisableRoleCommand());
 			CommandListener.addCommand(new GulagCommand());
+			CommandListener.addCommand(new UngulagCommand());
 			
 			GulagManager.getManager().loadFromDisk(jda);
 			

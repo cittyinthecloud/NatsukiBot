@@ -36,8 +36,12 @@ public class UngulagCommand implements Command {
 		StringBuilder builder = new StringBuilder();
 		
 		members.forEach((member) -> {
-			GulagManager.getManager().removeGulag(member);
-			builder.append("Ungulaged ").append(member.getEffectiveName()).append("\n");
+			boolean wasGulaged = GulagManager.getManager().removeGulag(member);
+			if (wasGulaged) {
+				builder.append("Ungulaged ").append(member.getEffectiveName()).append("\n");
+			} else {
+				builder.append(member.getEffectiveName()).append(" was not gulaged.\n");
+			}
 		});
 		
 		event.getChannel().sendMessage(builder).queue((message) -> {

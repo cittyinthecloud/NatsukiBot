@@ -87,7 +87,19 @@ public class GulagManager {
 	private GulagManager() {
 	}
 
-	public void removeGulag(Member member) {
-		
+	public boolean removeGulag(Member member) {
+		if (gulags.containsKey(member)) {
+			GulagState state = gulags.get(member);
+			if (!state.isGulaged()) {
+				return false;
+			}
+			state.timesInGulag--;
+			state.unGulagTime=0;
+			gulags.put(member, state);
+			sync();
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
