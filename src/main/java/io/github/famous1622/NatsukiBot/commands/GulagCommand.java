@@ -7,7 +7,6 @@ import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class GulagCommand implements Command {
@@ -39,7 +38,7 @@ public class GulagCommand implements Command {
 		}
 		Member member = mentions.get(0);
 		time = time.substring(0, time.length()-1);
-		long gulagtime = Long.parseLong(time)*1000;
+		long gulagtime = Long.parseLong(time)*60*60*1000;
 		GulagManager.getManager().addGulag(member, gulagtime);
 	} 
 }

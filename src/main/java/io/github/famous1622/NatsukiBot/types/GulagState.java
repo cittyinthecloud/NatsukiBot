@@ -15,6 +15,8 @@ public class GulagState {
 	public List<Role> roles = new ArrayList<Role>();
 	
 	public boolean isGulaged() {
+		System.out.println(new StringBuilder().append("    Current time:").append(System.currentTimeMillis()).append("\n")
+						   					  .append("    unGulagTime:").append(unGulagTime).toString());
 		return unGulagTime > System.currentTimeMillis();
 	}
 

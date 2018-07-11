@@ -48,7 +48,7 @@ public class Main {
 				public void run() {
 					GulagManager.getManager().syncRoles();
 				}
-			}, 5000, 30*60*1000);
+			}, 5000, 5*60*1000);
 		}
 	}
 }
