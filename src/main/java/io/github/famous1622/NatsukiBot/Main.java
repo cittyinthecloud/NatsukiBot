@@ -21,6 +21,7 @@ import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
 
 public class Main {
 	public static JDA jda;
@@ -42,9 +43,8 @@ public class Main {
 			CommandListener.addCommand(new DisableRoleCommand());
 			CommandListener.addCommand(new GulagCommand());
 			CommandListener.addCommand(new UngulagCommand());
-			
 			CommandListener.addCommand(new HelpCommand());
-			
+					
 			GulagManager.getManager().reload(jda);
 			
 			Timer gulagTimer = new Timer(true);
@@ -54,6 +54,9 @@ public class Main {
 					GulagManager.getManager().syncRoles();
 				}
 			}, 5000, 5*60*1000);
+			
+			jda.getPresence().setGame(Game.watching("Doki Doki Modding Club!"));
+			
 		}
 	}
 }
