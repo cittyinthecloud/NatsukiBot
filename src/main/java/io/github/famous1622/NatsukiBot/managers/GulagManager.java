@@ -19,7 +19,6 @@ public class GulagManager {
 			gulags.put(member, new GulagState());
 		}
 		GulagState state = gulags.get(member);
-		state.timesInGulag++;
 		if (state.isGulaged()) {
 			state.unGulagTime += milliseconds; 
 		} else {
@@ -56,6 +55,7 @@ public class GulagManager {
 				
 				if (inActualGulag && !state.isGulaged()) {	
 					member.getGuild().getController().modifyMemberRoles(member, state.roles).queue();
+					gulags.remove(member);
 				} else if (!inActualGulag && state.isGulaged()) {
 					state.roles = member.getRoles();
 					member.getGuild().getController().modifyMemberRoles(member, gulagRole).queue();
@@ -90,7 +90,6 @@ public class GulagManager {
 			if (!state.isGulaged()) {
 				return false;
 			}
-			state.timesInGulag--;
 			state.unGulagTime=0;
 			gulags.put(member, state);
 			sync();
