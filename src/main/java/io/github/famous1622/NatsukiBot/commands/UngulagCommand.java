@@ -34,7 +34,7 @@ public class UngulagCommand implements Command {
 		StringBuilder builder = new StringBuilder();
 		
 		members.forEach((member) -> {
-			boolean wasGulaged = GulagManager.getManager().removeGulag(member);
+			boolean wasGulaged = GulagManager.getManager(member.getJDA()).removeGulag(member.getUser());
 			if (wasGulaged) {
 				builder.append("Ungulaged ").append(member.getEffectiveName()).append("\n");
 			} else {
@@ -42,7 +42,7 @@ public class UngulagCommand implements Command {
 			}
 		});
 		
-		event.getChannel().sendMessage(builder).queue((message) -> {
+		event.getChannel().sendMessage(builder.toString()).queue((message) -> {
 			message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 		});
 		
@@ -51,6 +51,11 @@ public class UngulagCommand implements Command {
 	@Override
 	public String getHelpMessage() {
 		return "ungulags a member. Syntax: $ungulag @Member";
+	}
+
+	@Override
+	public boolean mustBePublic() {
+		return true;
 	}
 
 }

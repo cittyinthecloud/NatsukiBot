@@ -2,6 +2,7 @@ package io.github.famous1622.NatsukiBot.commands;
 
 import java.util.List;
 
+import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
@@ -25,10 +26,9 @@ public class HelpCommand implements Command {
 	@Override
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		StringBuilder message = new StringBuilder("Here's the list of commands:\n```");
-		Member member = event.getMember();
 		List<Command> commands = CommandListener.getCommands();
 		User author = event.getAuthor();
-		
+		Member member = Main.guild.getMember(author);
 		commands.stream()
 				.filter(command -> BotUtils.memberHasPrivilege(member, command.getRequiredLevel()))
 				.forEachOrdered(command -> {
@@ -47,6 +47,11 @@ public class HelpCommand implements Command {
 	@Override
 	public String getHelpMessage() {
 		return "prints this help message";
+	}
+
+	@Override
+	public boolean mustBePublic() {
+		return false;
 	}
 	
 }

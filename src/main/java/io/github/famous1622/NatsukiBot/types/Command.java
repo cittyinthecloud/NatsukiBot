@@ -8,5 +8,6 @@ public interface Command {
 	public PrivilegeLevel getRequiredLevel();
 	public String getCommand();
 	public String getHelpMessage();
-	public void onCommand(MessageReceivedEvent event, List<String> arguments);	
+	public void onCommand(MessageReceivedEvent event, List<String> arguments);
+	public boolean mustBePublic();
 }

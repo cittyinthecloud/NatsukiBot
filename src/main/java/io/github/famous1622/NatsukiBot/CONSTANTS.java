@@ -1,7 +1,9 @@
 package io.github.famous1622.NatsukiBot;
 
+import io.github.famous1622.NatsukiBot.config.BotConfig;
+
 public class CONSTANTS {
-	public static final String PREFIX = "$";
+	public static final String PREFIX = BotConfig.getPrefix();
 	public static final String COMEDYDARKMESSAGE = 
 			"Rules: \n" + 
 			"You are still subject to the rules of DDMC. \n" + 

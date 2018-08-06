@@ -37,4 +37,9 @@ public class DisableRoleCommand implements Command {
 	public String getHelpMessage() {
 		return "toggles whether or not the $iam command is usable";
 	}
+
+	@Override
+	public boolean mustBePublic() {
+		return false;
+	}
 }

@@ -25,3 +25,6 @@ target/
 roles.xml
 rrconfig.xml
 gulag.xml
+config.json
+gulag.json
+roles.json

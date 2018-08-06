@@ -1,9 +1,11 @@
 package io.github.famous1622.NatsukiBot.commands;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.famous1622.NatsukiBot.CONSTANTS;
+import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Emote;
@@ -15,20 +17,22 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
 public class ComedyDarkCommand implements Command {
-	public static HashMap<String, Guild> guilds = new HashMap<String, Guild>();
+	public static List<User> cdusers = new ArrayList<User>();
 
 	public String getCommand() {
 		return "comedy-dark";
 	}
 
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
-		Guild guild = event.getGuild();
+		Guild guild = Main.guild;
 		GuildController guildController = new GuildController(guild);
 		
-		List<Emote> ehehes = guild.getEmotesByName("Ehehe", false);
-		if (!ehehes.isEmpty()) {
-			event.getMessage().addReaction(ehehes.get(0)).queue();
-		}
+//		List<Emote> ehehes = guild.getEmotesByName("Ehehe", false);
+//		
+//		if (!ehehes.isEmpty()) {
+//			event.getMessage().addReaction(ehehes.get(0)).queue();
+//		}
+		event.getMessage().addReaction(event.getJDA().getEmoteById(BotConfig.getEheheId()));
 		User author = event.getAuthor();
 		Member member = guild.getMember(author);
 		List<Role> roles = member.getRoles();
@@ -38,7 +42,7 @@ public class ComedyDarkCommand implements Command {
 		} else {
 			author.openPrivateChannel().queue((pchannel) -> {
 				pchannel.sendMessage(CONSTANTS.COMEDYDARKMESSAGE).queue();
-				guilds.put(author.getId(), guild);
+				cdusers.add(author);
 			});
 		}
 	}
@@ -50,5 +54,10 @@ public class ComedyDarkCommand implements Command {
 	@Override
 	public String getHelpMessage() {
 		return "toggles comedy-dark permissions";
+	}
+
+	@Override
+	public boolean mustBePublic() {
+		return false;
 	}
 }

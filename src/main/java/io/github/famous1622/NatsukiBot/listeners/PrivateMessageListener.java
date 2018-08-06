@@ -1,8 +1,8 @@
 package io.github.famous1622.NatsukiBot.listeners;
 
+import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
 import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,13 +14,11 @@ public class PrivateMessageListener extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		if (event.isFromType(ChannelType.PRIVATE)) {
 			if (event.getMessage().getContentDisplay().equalsIgnoreCase("I understand the rules of the comedy-dark channel")) {
-				String authorid = event.getAuthor().getId();
-				if (ComedyDarkCommand.guilds.containsKey(authorid)) {
-					Guild guild = ComedyDarkCommand.guilds.get(authorid);
+				if (ComedyDarkCommand.cdusers.contains(event.getAuthor())) {
 					event.getMessage().addReaction("👌").queue();
-					Member member = guild.getMember(event.getAuthor());
-					Role cdrole = guild.getRolesByName("comedy-dark", true).get(0);
-					new GuildController(guild).addSingleRoleToMember(member, cdrole).queue();
+					Member member = Main.guild.getMember(event.getAuthor());
+					Role cdrole = Main.guild.getRolesByName("comedy-dark", true).get(0);
+					new GuildController(Main.guild).addSingleRoleToMember(member, cdrole).queue();
 				}
 			}
 		}

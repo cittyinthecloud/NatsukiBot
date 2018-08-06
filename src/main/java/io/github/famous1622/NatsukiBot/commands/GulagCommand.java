@@ -28,22 +28,32 @@ public class GulagCommand implements Command {
 			event.getChannel().sendMessage("Syntax: `$gulag @User Xh`").queue((message) -> {
 				message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 			});
+		} else {
+			String mention = arguments.get(0);
+			String time = arguments.get(1);
+			if (!mention.startsWith("<@") || !time.endsWith("h")) {
+				event.getChannel().sendMessage("Syntax: `$gulag @User Xh`").queue((message) -> {
+					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
+				});
+			} else {
+				Member member = mentions.get(0);
+				time = time.substring(0, time.length()-1);
+				long gulagtime = Long.parseLong(time)*60*60*1000;
+				GulagManager.getManager(member.getJDA()).addGulag(member.getUser(), gulagtime);
+				event.getChannel().sendMessage("Gulaged "+member.getEffectiveName()).queue((message) -> {
+					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
+				});
+			}
 		}
-		String mention = arguments.get(0);
-		String time = arguments.get(1);
-		if (!mention.startsWith("@") || !time.endsWith("h")) {
-			event.getChannel().sendMessage("Syntax: `$gulag @User Xh`").queue((message) -> {
-				message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-			});
-		}
-		Member member = mentions.get(0);
-		time = time.substring(0, time.length()-1);
-		long gulagtime = Long.parseLong(time)*60*60*1000;
-		GulagManager.getManager().addGulag(member, gulagtime);
 	}
 
 	@Override
 	public String getHelpMessage() {
 		return "gulags a member. Syntax: $gulag @Member Xh";
+	}
+
+	@Override
+	public boolean mustBePublic() {
+		return true;
 	} 
 }

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
 import net.dv8tion.jda.core.entities.ChannelType;
@@ -20,18 +21,20 @@ public class CommandListener extends ListenerAdapter{
 	private static List<Command> commands = new ArrayList<Command>();
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		if (event.isFromType(ChannelType.PRIVATE)) {
-			return;
-		}
-		Guild guild = event.getGuild();
+		
+//		if (event.isFromType(ChannelType.PRIVATE)) {
+//			return;
+//		}
+
+		Guild guild = Main.guild;
 		Member member = guild.getMember(event.getAuthor());
 		Message message = event.getMessage();
-		String content = message.getContentDisplay();
+		String content = message.getContentRaw();
 		
 		if (event.getAuthor().isBot()) return;
 		
 		if (content.startsWith(PREFIX)) {
-			content = content.substring(1);
+			content = content.substring(PREFIX.length());
 			
 			String commandstr = content.split(" ")[0];
 			List<String> arguments = new ArrayList<String>(); 
@@ -42,8 +45,11 @@ public class CommandListener extends ListenerAdapter{
 				if (command.getCommand().equals(commandstr)) {
 					System.out.println(commandstr + " was matched.");
 					if (BotUtils.memberHasPrivilege(member, command.getRequiredLevel())) {
-						command.onCommand(event,arguments);
+						if(!command.mustBePublic() || !event.isFromType(ChannelType.PRIVATE)) {
+							command.onCommand(event,arguments);
+						}
 					}
+					break;
 				}
 			}
 		}
