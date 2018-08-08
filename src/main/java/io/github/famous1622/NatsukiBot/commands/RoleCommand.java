@@ -7,6 +7,7 @@ import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.data.SelfAssignableRolesData;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
@@ -24,18 +25,24 @@ public class RoleCommand implements Command {
 		String arg = String.join(" ", arguments);
 		Guild guild = Main.guild;
 		Member member = guild.getMember(event.getAuthor());
-		SelfAssignableRolesData roleConfig = SelfAssignableRolesData.getConfig(guild.getJDA());
-		if (roleConfig.containsKey(arg.toLowerCase())) {
-			Role role = roleConfig.get(arg.toLowerCase());
+		SelfAssignableRolesData roleData = SelfAssignableRolesData.getConfig(guild.getJDA());
+		if (roleData.containsKey(arg.toLowerCase())) {
+			Role role = roleData.get(arg.toLowerCase());
 			if (member.getRoles().contains(role)) {
-				guild.getController().removeSingleRoleFromMember(member,role).queue();
+				guild.getController().removeSingleRoleFromMember(member,role)
+								     .reason("Role self-unassigned")
+									 .queue();
 				event.getMessage().delete().queue();
 				event.getChannel().sendMessage("Removed role: "+role.getName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 				});
 			} else {
-				guild.getController().addSingleRoleToMember(member,role).queue();
-				event.getMessage().delete().queue();
+				guild.getController().addSingleRoleToMember(member,role)
+									 .reason("Role self-assigned")
+									 .queue();
+				if(event.isFromType(ChannelType.TEXT)) {
+					event.getMessage().delete().queue();
+				}
 				event.getChannel().sendMessage("Added role: "+role.getName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 				});

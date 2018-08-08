@@ -13,10 +13,8 @@ public class ServerSuggestionsListener extends ListenerAdapter {
 		if(event.getChannel().getName().equals("server_suggestions")) {
 			Guild guild = event.getGuild();
 			Member member = guild.getMember(event.getAuthor());
-			if(BotUtils.memberHasPrivilege(member, PrivilegeLevel.MOD)) {
-				if (event.getMessage().getContentRaw().contains("$")) {
+			if(BotUtils.memberHasPrivilege(member, PrivilegeLevel.MOD) && event.getMessage().getContentRaw().contains("$")) {
 					return;
-				}
 			}
 			event.getMessage().addReaction("⬆").queue((v)->{
 				event.getMessage().addReaction("⬇").queue();

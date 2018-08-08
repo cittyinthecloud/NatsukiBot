@@ -44,11 +44,15 @@ public class GulagManager {
 				boolean inActualGulag = member.getRoles().contains(gulagRole);
 				
 				if (inActualGulag && !state.isGulaged()) {	
-					member.getGuild().getController().modifyMemberRoles(member, state.roles).queue();
+					member.getGuild().getController().modifyMemberRoles(member, state.roles)
+													 .reason("Ungulaging member")
+													 .queue();
 					gulags.remove(member.getUser());
 				} else if (!inActualGulag && state.isGulaged()) {
 					state.roles = member.getRoles();
-					member.getGuild().getController().modifyMemberRoles(member, gulagRole).queue();
+					member.getGuild().getController().modifyMemberRoles(member, gulagRole)
+													 .reason("Gulaging member")
+													 .queue();
 				}
 			}
 		});

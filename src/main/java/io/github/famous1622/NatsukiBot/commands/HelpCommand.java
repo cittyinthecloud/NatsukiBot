@@ -7,6 +7,7 @@ import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -31,14 +32,16 @@ public class HelpCommand implements Command {
 		Member member = Main.guild.getMember(author);
 		commands.stream()
 				.filter(command -> BotUtils.memberHasPrivilege(member, command.getRequiredLevel()))
+				.filter(command -> command.getHelpMessage() != null)
 				.forEachOrdered(command -> {
 					message.append("\n")
 						   .append(command.getCommand())
 						   .append("\n    ").append(command.getHelpMessage())
 						   .append('\n');
 				});
-		
-		event.getMessage().delete().queue();
+		if (event.isFromType(ChannelType.TEXT)) {
+			event.getMessage().delete().queue();
+		}
 		author.openPrivateChannel().queue((pchannel) -> {
 			pchannel.sendMessage(message.append("```")).queue();
 		});
