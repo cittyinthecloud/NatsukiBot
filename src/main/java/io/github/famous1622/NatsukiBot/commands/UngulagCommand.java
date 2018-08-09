@@ -3,6 +3,9 @@ package io.github.famous1622.NatsukiBot.commands;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.logging.types.Action;
+import io.github.famous1622.NatsukiBot.logging.types.ActionType;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
@@ -40,6 +43,11 @@ public class UngulagCommand implements Command {
 			} else {
 				builder.append(member.getEffectiveName()).append(" was not gulaged.\n");
 			}
+			
+			Main.botLog.logAction(new Action().withType(ActionType.UNGULAGUSER)
+											  .withResponsible(event.getAuthor())
+											  .withTarget(member.getUser())
+											  .withArguments(""));
 		});
 		
 		event.getChannel().sendMessage(builder.toString()).queue((message) -> {

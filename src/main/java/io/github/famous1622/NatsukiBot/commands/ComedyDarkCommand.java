@@ -25,13 +25,7 @@ public class ComedyDarkCommand implements Command {
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		Guild guild = Main.guild;
 		GuildController guildController = new GuildController(guild);
-		
-//		List<Emote> ehehes = guild.getEmotesByName("Ehehe", false);
-//		
-//		if (!ehehes.isEmpty()) {
-//			event.getMessage().addReaction(ehehes.get(0)).queue();
-//		}
-		event.getMessage().addReaction(event.getJDA().getEmoteById(BotConfig.getEheheId()));
+		event.getMessage().addReaction(event.getJDA().getEmoteById(BotConfig.getEheheId())).queue();
 		User author = event.getAuthor();
 		Member member = guild.getMember(author);
 		List<Role> roles = member.getRoles();

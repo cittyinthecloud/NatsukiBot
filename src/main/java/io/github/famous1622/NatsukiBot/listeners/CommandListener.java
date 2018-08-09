@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.logging.types.Operation;
+import io.github.famous1622.NatsukiBot.logging.types.OperationType;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
 import net.dv8tion.jda.core.entities.ChannelType;
@@ -47,7 +49,20 @@ public class CommandListener extends ListenerAdapter{
 					if (BotUtils.memberHasPrivilege(member, command.getRequiredLevel())) {
 						if(!command.mustBePublic() || !event.isFromType(ChannelType.PRIVATE)) {
 							command.onCommand(event,arguments);
+							Main.botLog.logOperation(new Operation(this).withType(OperationType.RUNCOMMAND)
+																		.withParty(event.getAuthor())
+																		.withData(event.getMessage().getContentDisplay()));
+						} else {
+							command.onCommand(event,arguments);
+							Main.botLog.logOperation(new Operation(this).withType(OperationType.REFUSECOMMAND)
+																		.withParty(event.getAuthor())
+																		.withData("Public command attempted in a private context: " + event.getMessage().getContentDisplay()));
 						}
+					} else {
+						command.onCommand(event,arguments);
+						Main.botLog.logOperation(new Operation(this).withType(OperationType.REFUSECOMMAND)
+																	.withParty(event.getAuthor())
+																	.withData("Command attempted with inadequate permission: " + event.getMessage().getContentDisplay()));
 					}
 					break;
 				}

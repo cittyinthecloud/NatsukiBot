@@ -23,10 +23,10 @@ import net.dv8tion.jda.core.entities.User;
 
 public class RoleStashData {
 	
-	private static RoleStashData theOne = null;
+	private transient static RoleStashData theOne = null;
 	private static final String path = "rrconfig.json";
 	
-	private transient Map<User,List<Role>> stash = new HashMap<User,List<Role>>();
+	private transient Map<String,List<Role>> stash = new HashMap<String,List<Role>>();
 
 	private JDA jda;
 	
@@ -48,8 +48,8 @@ public class RoleStashData {
 		 stash.forEach((user,rolelist) -> {
 			JsonObject entryObj = new JsonObject();
 			JsonArray JSON_rolelist = new JsonArray();
-			rolelist.forEach((role)-> JSON_rolelist.add(role.getId()));
-			entryObj.add("user", Main.gson.toJsonTree(user));
+			rolelist.forEach(role -> JSON_rolelist.add(role.getId()));
+			entryObj.addProperty("user", user);
 			entryObj.add("rolelist", JSON_rolelist);
 			stashData.add(entryObj);
 		});
@@ -66,9 +66,7 @@ public class RoleStashData {
 			JsonArray stashData = new JsonParser().parse(reader).getAsJsonArray();
 			stashData.forEach((entryElem) -> {
 				JsonObject entryObj = entryElem.getAsJsonObject();
-				JsonPrimitive JSON_user = entryObj.getAsJsonPrimitive("user");
-				User user = Main.gson.fromJson(JSON_user, User.class);
-				
+				String user = entryObj.getAsJsonPrimitive("user").getAsString();
 				JsonArray JSON_rolelist = entryObj.getAsJsonArray("rolelist");
 				List<Role> rolelist = new ArrayList<Role>();
 				JSON_rolelist.forEach((roleId) -> rolelist.add(jda.getRoleById(roleId.getAsString())));
@@ -82,15 +80,20 @@ public class RoleStashData {
 	}
 
 	public void put(User user, List<Role> roles) {
-		this.stash.put(user, roles);
+		this.stash.put(user.getId(), roles);
 		saveToDisk();
 	}
 
 	public List<Role> get(User user) {
-		return this.stash.get(user);
+		return this.stash.get(user.getId());
 	}
 
 	public boolean containsKey(User user) {
-		return this.stash.containsKey(user);
+		return this.stash.containsKey(user.getId());
+	}
+	
+	public void remove(User user) {
+		this.stash.remove(user.getId());
+		saveToDisk();
 	}
 }

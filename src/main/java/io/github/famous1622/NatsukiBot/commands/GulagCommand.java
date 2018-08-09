@@ -3,6 +3,9 @@ package io.github.famous1622.NatsukiBot.commands;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.logging.types.Action;
+import io.github.famous1622.NatsukiBot.logging.types.ActionType;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
@@ -24,15 +27,15 @@ public class GulagCommand implements Command {
 	@Override
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		List<Member> mentions = event.getMessage().getMentionedMembers();
-		if (mentions.size()!=1 || arguments.size()<2) {
-			event.getChannel().sendMessage("Syntax: `$gulag @User Xh`").queue((message) -> {
+		if (mentions.size()!=1 || arguments.size()<3) {
+			event.getChannel().sendMessage("Syntax: `$gulag @User Xh [Reason]`").queue((message) -> {
 				message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 			});
 		} else {
 			String mention = arguments.get(0);
 			String time = arguments.get(1);
 			if (!mention.startsWith("<@") || !time.endsWith("h")) {
-				event.getChannel().sendMessage("Syntax: `$gulag @User Xh`").queue((message) -> {
+				event.getChannel().sendMessage("Syntax: `$gulag @User Xh [Reason]`").queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 				});
 			} else {
@@ -43,6 +46,10 @@ public class GulagCommand implements Command {
 				event.getChannel().sendMessage("Gulaged "+member.getEffectiveName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 				});
+				Main.botLog.logAction(new Action().withType(ActionType.GULAGUSER)
+												  .withResponsible(event.getAuthor())
+												  .withTarget(member.getUser())
+												  .withArguments(String.join(" ", arguments.subList(2, arguments.size()))));
 			}
 		}
 	}

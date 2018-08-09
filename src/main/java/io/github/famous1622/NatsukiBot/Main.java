@@ -20,6 +20,9 @@ import io.github.famous1622.NatsukiBot.listeners.CommandListener;
 import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerLeaveListener;
+import io.github.famous1622.NatsukiBot.logging.ConsoleLogger;
+import io.github.famous1622.NatsukiBot.logging.GoogleSheetsLogger;
+import io.github.famous1622.NatsukiBot.logging.ILogger;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.GulagState;
 import io.github.famous1622.NatsukiBot.utils.GulagStateSerializer;
@@ -37,6 +40,8 @@ public class Main {
 	public static Gson gson;
 	
 	public static Guild guild;
+	
+	public static ILogger botLog = new ConsoleLogger();
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
 //		if (args.length<1) {

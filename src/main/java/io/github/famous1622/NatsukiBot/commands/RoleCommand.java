@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.data.SelfAssignableRolesData;
+import io.github.famous1622.NatsukiBot.logging.types.Action;
+import io.github.famous1622.NatsukiBot.logging.types.ActionType;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.ChannelType;
@@ -32,6 +34,10 @@ public class RoleCommand implements Command {
 				guild.getController().removeSingleRoleFromMember(member,role)
 								     .reason("Role self-unassigned")
 									 .queue();
+				Main.botLog.logAction(new Action().withType(ActionType.SELFUNASSIGN)
+												  .withResponsible(event.getAuthor())
+												  .withSelfTarget()
+												  .withArguments(arg));
 				event.getMessage().delete().queue();
 				event.getChannel().sendMessage("Removed role: "+role.getName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
@@ -40,6 +46,10 @@ public class RoleCommand implements Command {
 				guild.getController().addSingleRoleToMember(member,role)
 									 .reason("Role self-assigned")
 									 .queue();
+				Main.botLog.logAction(new Action().withType(ActionType.SELFASSIGN)
+												  .withResponsible(event.getAuthor())
+												  .withSelfTarget()
+												  .withArguments(arg));
 				if(event.isFromType(ChannelType.TEXT)) {
 					event.getMessage().delete().queue();
 				}

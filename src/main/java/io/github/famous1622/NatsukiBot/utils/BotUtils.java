@@ -1,14 +1,24 @@
 package io.github.famous1622.NatsukiBot.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.utils.PermissionUtil;
 
 public class BotUtils {
+	
+	private static Role ourHighest = null;
+	
 	public static PrivilegeLevel getMemberLevel(Member member) {
 		Guild guild = member.getGuild();
 		Role adminRole = guild.getRolesByName("Admin", true).get(0);
@@ -40,5 +50,23 @@ public class BotUtils {
 	
 	public static boolean memberHasPrivilege(Member member, PrivilegeLevel level) {
 		return getMemberLevel(member).compareTo(level)>=0;
+	}
+	
+	public static String getDiscordTag(User user) {
+		return user.getName()+"#"+user.getDiscriminator();
+	}
+	
+	public static List<Role> getModifiableRoles(List<Role> roles) {
+		if (roles.isEmpty()) {
+			return roles;
+		} else {
+			Guild guild = Main.jda.getGuildById(BotConfig.getGuildId());
+			Member self = guild.getMember(Main.jda.getSelfUser());
+			return Collections.unmodifiableList(
+						roles.stream()
+							 .filter(role -> PermissionUtil.canInteract(self, role))
+							 .collect(Collectors.toList())
+				    );
+		}
 	}
 }
