@@ -17,6 +17,10 @@ public class Operation {
 		this.withCause(cause.getClass());
 	}
 
+	public Date getTime() {
+		return time;
+	}
+	
 	public String getCause() {
 		return cause;
 	}

@@ -28,3 +28,5 @@ gulag.xml
 config.json
 gulag.json
 roles.json
+/client_secret.json
+/application.conf

@@ -1,13 +1,12 @@
 package io.github.famous1622.NatsukiBot.listeners;
 
-import static io.github.famous1622.NatsukiBot.CONSTANTS.PREFIX;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.logging.types.Operation;
 import io.github.famous1622.NatsukiBot.logging.types.OperationType;
 import io.github.famous1622.NatsukiBot.types.Command;
@@ -35,8 +34,8 @@ public class CommandListener extends ListenerAdapter{
 		
 		if (event.getAuthor().isBot()) return;
 		
-		if (content.startsWith(PREFIX)) {
-			content = content.substring(PREFIX.length());
+		if (content.startsWith(BotConfig.getPrefix())) {
+			content = content.substring(BotConfig.getPrefix().length());
 			
 			String commandstr = content.split(" ")[0];
 			List<String> arguments = new ArrayList<String>(); 

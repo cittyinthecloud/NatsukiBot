@@ -3,7 +3,6 @@ package io.github.famous1622.NatsukiBot.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import io.github.famous1622.NatsukiBot.Main;
@@ -16,8 +15,6 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 
 public class BotUtils {
-	
-	private static Role ourHighest = null;
 	
 	public static PrivilegeLevel getMemberLevel(Member member) {
 		Guild guild = member.getGuild();

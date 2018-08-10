@@ -21,7 +21,6 @@ import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerLeaveListener;
 import io.github.famous1622.NatsukiBot.logging.ConsoleLogger;
-import io.github.famous1622.NatsukiBot.logging.GoogleSheetsLogger;
 import io.github.famous1622.NatsukiBot.logging.ILogger;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.GulagState;
@@ -44,9 +43,6 @@ public class Main {
 	public static ILogger botLog = new ConsoleLogger();
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
-//		if (args.length<1) {
-//			System.out.println("Requires a token argument");
-//		} else {
 		jda = new JDABuilder(AccountType.BOT)
 				.setToken(BotConfig.getToken())
 				.addEventListener(new CommandListener())
@@ -70,6 +66,8 @@ public class Main {
 		CommandListener.addCommand(new HelpCommand());
 				
 		GulagManager.getManager(jda).reload();
+		guild = jda.getGuildById(BotConfig.getGuildId());
+		jda.getPresence().setGame(Game.watching("Doki Doki Modding Club!"));
 		
 		Timer gulagTimer = new Timer(true);
 		gulagTimer.scheduleAtFixedRate(new TimerTask() {
@@ -79,11 +77,6 @@ public class Main {
 			}
 		}, 5000, 5*60*1000);
 		
-		guild = jda.getGuildById(BotConfig.getGuildId());
-		
-		
-		
-		jda.getPresence().setGame(Game.watching("Doki Doki Modding Club!"));
+
 	}
-	//}
 }

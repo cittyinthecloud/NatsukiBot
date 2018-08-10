@@ -2,8 +2,8 @@ package io.github.famous1622.NatsukiBot.listeners;
 
 import java.util.List;
 
-import io.github.famous1622.NatsukiBot.CONSTANTS;
 import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.data.RoleStashData;
 import io.github.famous1622.NatsukiBot.logging.types.Operation;
 import io.github.famous1622.NatsukiBot.logging.types.OperationType;
@@ -36,12 +36,10 @@ public class ServerJoinListener extends ListenerAdapter
 			Main.botLog.logOperation(new Operation(this).withType(OperationType.RESTOREROLES)
 														.withParty(user)
 														.withData(LoggingUtils.roleListToLogData(roles)));
-		} else {
-			String username = user.getAsMention();
-			TextChannel channel = event.getGuild().getSystemChannel();
 			
-			channel.sendMessage(username + " " + CONSTANTS.WELCOMEMESSAGE).queue();
-			user.openPrivateChannel().queue(pchannel -> pchannel.sendMessage(CONSTANTS.WELCOMEDM).queue());
+			user.openPrivateChannel().queue(pchannel -> pchannel.sendMessage(BotConfig.getWelcomeBack()).queue());
+		} else {			
+			user.openPrivateChannel().queue(pchannel -> pchannel.sendMessage(BotConfig.getWelcomeDM()).queue());
 			System.out.println("complete");
 		}
 	}

@@ -15,7 +15,11 @@ public class Action {
 	public Action() {
 		this.time = new Date();
 	}
-
+	
+	public Date getTime() {
+		return time;
+	}
+	
 	public ActionType getType() {
 		return type;
 	}
