@@ -5,9 +5,6 @@ import io.github.famous1622.NatsukiBot.logging.types.Operation;
 
 public class ConsoleLogger implements ILogger {
 
-	public ConsoleLogger() {
-	}
-
 	@Override
 	public boolean logAction(Action action) {
 		System.out.println("----------ACTION----------");
