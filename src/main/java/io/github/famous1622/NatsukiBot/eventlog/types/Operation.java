@@ -1,4 +1,4 @@
-package io.github.famous1622.NatsukiBot.logging.types;
+package io.github.famous1622.NatsukiBot.eventlog.types;
 
 import java.util.Date;
 

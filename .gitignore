@@ -28,5 +28,6 @@ gulag.xml
 config.json
 gulag.json
 roles.json
-/client_secret.json
-/application.conf
+client_secret.json
+/.gradle/
+secrets.conf

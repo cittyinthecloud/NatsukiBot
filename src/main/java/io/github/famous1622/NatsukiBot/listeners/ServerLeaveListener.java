@@ -4,8 +4,8 @@ import java.util.List;
 
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.data.RoleStashData;
-import io.github.famous1622.NatsukiBot.logging.types.Operation;
-import io.github.famous1622.NatsukiBot.logging.types.OperationType;
+import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
+import io.github.famous1622.NatsukiBot.eventlog.types.OperationType;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
 import io.github.famous1622.NatsukiBot.utils.LoggingUtils;
@@ -21,7 +21,7 @@ public class ServerLeaveListener extends ListenerAdapter {
 		List<Role> roles = BotUtils.getModifiableRoles(member.getRoles());
 		RoleStashData rrconfig = RoleStashData.getConfig(event.getJDA());
 		rrconfig.put(member.getUser(), roles);
-		Main.botLog.logOperation(new Operation(this).withType(OperationType.STASHROLES)
+		Main.eventLog.logOperation(new Operation(this).withType(OperationType.STASHROLES)
 													.withParty(member.getUser())
 													.withData(LoggingUtils.roleListToLogData(roles)));
 		rrconfig.saveToDisk();

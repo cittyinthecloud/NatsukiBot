@@ -31,9 +31,12 @@ public class BotConfig {
 		return config.getString("welcomeBackMessage");
 	}
 	
+	public static String getComedyDarkMessage() {
+		return config.getString("cdmessage");
+	}
+	
+	
 	public static SheetsConfig getSheetsConfig() {
 		return new SheetsConfig(config.getString("sheets.id"), config.getString("sheets.action"), config.getString("sheets.operation"));
 	}
-	
-
 }

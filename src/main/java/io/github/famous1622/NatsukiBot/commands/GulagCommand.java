@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.github.famous1622.NatsukiBot.Main;
-import io.github.famous1622.NatsukiBot.logging.types.Action;
-import io.github.famous1622.NatsukiBot.logging.types.ActionType;
+import io.github.famous1622.NatsukiBot.eventlog.types.Action;
+import io.github.famous1622.NatsukiBot.eventlog.types.ActionType;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
@@ -46,7 +46,7 @@ public class GulagCommand implements Command {
 				event.getChannel().sendMessage("Gulaged "+member.getEffectiveName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 				});
-				Main.botLog.logAction(new Action().withType(ActionType.GULAGUSER)
+				Main.eventLog.logAction(new Action().withType(ActionType.GULAGUSER)
 												  .withResponsible(event.getAuthor())
 												  .withTarget(member.getUser())
 												  .withArguments(String.join(" ", arguments.subList(2, arguments.size()))));

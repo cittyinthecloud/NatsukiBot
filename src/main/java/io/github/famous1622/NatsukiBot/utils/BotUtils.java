@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
+import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
@@ -65,5 +66,9 @@ public class BotUtils {
 							 .collect(Collectors.toList())
 				    );
 		}
+	}
+	
+	public static Emote getEmote(String emote) {
+		return Main.jda.getEmotesByName(emote, false).get(0);
 	}
 }

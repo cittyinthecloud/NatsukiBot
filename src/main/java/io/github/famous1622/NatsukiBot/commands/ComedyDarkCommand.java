@@ -3,7 +3,6 @@ package io.github.famous1622.NatsukiBot.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.famous1622.NatsukiBot.CONSTANTS;
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.types.Command;
@@ -34,7 +33,7 @@ public class ComedyDarkCommand implements Command {
 			guildController.removeSingleRoleFromMember(member, cdrole).queue();
 		} else {
 			author.openPrivateChannel().queue((pchannel) -> {
-				pchannel.sendMessage(CONSTANTS.COMEDYDARKMESSAGE).queue();
+				pchannel.sendMessage(BotConfig.getComedyDarkMessage()).queue();
 				cdusers.add(author);
 			});
 		}

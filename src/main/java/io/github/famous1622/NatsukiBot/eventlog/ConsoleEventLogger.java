@@ -1,9 +1,9 @@
-package io.github.famous1622.NatsukiBot.logging;
+package io.github.famous1622.NatsukiBot.eventlog;
 
-import io.github.famous1622.NatsukiBot.logging.types.Action;
-import io.github.famous1622.NatsukiBot.logging.types.Operation;
+import io.github.famous1622.NatsukiBot.eventlog.types.Action;
+import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
 
-public class ConsoleLogger implements ILogger {
+public class ConsoleEventLogger implements IEventLogger {
 
 	@Override
 	public boolean logAction(Action action) {

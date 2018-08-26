@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.data.SelfAssignableRolesData;
-import io.github.famous1622.NatsukiBot.logging.types.Action;
-import io.github.famous1622.NatsukiBot.logging.types.ActionType;
+import io.github.famous1622.NatsukiBot.eventlog.types.Action;
+import io.github.famous1622.NatsukiBot.eventlog.types.ActionType;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
 import net.dv8tion.jda.core.entities.ChannelType;
@@ -34,7 +34,7 @@ public class RoleCommand implements Command {
 				guild.getController().removeSingleRoleFromMember(member,role)
 								     .reason("Role self-unassigned")
 									 .queue();
-				Main.botLog.logAction(new Action().withType(ActionType.SELFUNASSIGN)
+				Main.eventLog.logAction(new Action().withType(ActionType.SELFUNASSIGN)
 												  .withResponsible(event.getAuthor())
 												  .withSelfTarget()
 												  .withArguments(arg));
@@ -46,7 +46,7 @@ public class RoleCommand implements Command {
 				guild.getController().addSingleRoleToMember(member,role)
 									 .reason("Role self-assigned")
 									 .queue();
-				Main.botLog.logAction(new Action().withType(ActionType.SELFASSIGN)
+				Main.eventLog.logAction(new Action().withType(ActionType.SELFASSIGN)
 												  .withResponsible(event.getAuthor())
 												  .withSelfTarget()
 												  .withArguments(arg));

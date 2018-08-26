@@ -1,13 +1,11 @@
-package io.github.famous1622.NatsukiBot.logging;
+package io.github.famous1622.NatsukiBot.eventlog;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -16,22 +14,21 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.config.SheetsConfig;
-import io.github.famous1622.NatsukiBot.logging.types.Action;
-import io.github.famous1622.NatsukiBot.logging.types.Operation;
+import io.github.famous1622.NatsukiBot.eventlog.types.Action;
+import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
 
-public class GoogleSheetsLogger implements ILogger {
+public class GoogleSheetsEventLogger implements IEventLogger {
 	
 	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	
 	private Sheets sheets;
 	private static SheetsConfig config = BotConfig.getSheetsConfig();
 	
-	public GoogleSheetsLogger() {
+	public GoogleSheetsEventLogger() {
 		try {
 			GoogleCredential creds = GoogleCredential.fromStream(new FileInputStream("client_secret.json"))
 					.createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));

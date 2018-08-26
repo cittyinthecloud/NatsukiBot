@@ -5,8 +5,8 @@ import java.util.List;
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.data.RoleStashData;
-import io.github.famous1622.NatsukiBot.logging.types.Operation;
-import io.github.famous1622.NatsukiBot.logging.types.OperationType;
+import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
+import io.github.famous1622.NatsukiBot.eventlog.types.OperationType;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.utils.LoggingUtils;
 import net.dv8tion.jda.core.entities.Member;
@@ -32,7 +32,7 @@ public class ServerJoinListener extends ListenerAdapter
 											.queue((v) -> GulagManager.getManager(user.getJDA()).reload());
 			rrconfig.remove(user);
 			
-			Main.botLog.logOperation(new Operation(this).withType(OperationType.RESTOREROLES)
+			Main.eventLog.logOperation(new Operation(this).withType(OperationType.RESTOREROLES)
 														.withParty(user)
 														.withData(LoggingUtils.roleListToLogData(roles)));
 			

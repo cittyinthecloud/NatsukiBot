@@ -16,12 +16,13 @@ import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleSelfAssignToggleCommand;
 import io.github.famous1622.NatsukiBot.commands.UngulagCommand;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
+import io.github.famous1622.NatsukiBot.eventlog.ConsoleEventLogger;
+import io.github.famous1622.NatsukiBot.eventlog.IEventLogger;
+import io.github.famous1622.NatsukiBot.listeners.ComedyDarkListener;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
-import io.github.famous1622.NatsukiBot.listeners.PrivateMessageListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerLeaveListener;
-import io.github.famous1622.NatsukiBot.logging.ConsoleLogger;
-import io.github.famous1622.NatsukiBot.logging.ILogger;
+import io.github.famous1622.NatsukiBot.listeners.ServerSuggestionsListener;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.GulagState;
 import io.github.famous1622.NatsukiBot.utils.GulagStateSerializer;
@@ -40,16 +41,16 @@ public class Main {
 	
 	public static Guild guild;
 	
-	public static ILogger botLog = new ConsoleLogger();
+	public static IEventLogger eventLog = new ConsoleEventLogger();
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
 		jda = new JDABuilder(AccountType.BOT)
 				.setToken(BotConfig.getToken())
 				.addEventListener(new CommandListener())
-				.addEventListener(new PrivateMessageListener())
-				//.addEventListener(new ServerSuggestionsListener())
+				.addEventListener(new ComedyDarkListener())
+				.addEventListener(new ServerSuggestionsListener())
 				.addEventListener(new ServerJoinListener())
-				.addEventListener(new ServerLeaveListener())
+			    .addEventListener(new ServerLeaveListener())
 				.buildBlocking();
 		
 		gson = new GsonBuilder().setPrettyPrinting()

@@ -67,7 +67,8 @@ public class GulagData implements Map<User, GulagState> {
 						Main.gson.fromJson(JSON_state, GulagState.class));
 			});
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			map.clear();
+			saveToDisk();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
