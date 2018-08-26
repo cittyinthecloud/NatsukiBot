@@ -12,7 +12,11 @@ public class BotConfig {
 	}
 	
 	public static String getToken() {
-		return config.getString("token");
+		if (System.getenv("NBOT_TOKEN") != null) {
+			return System.getenv("NBOT_TOKEN");
+		} else {
+			return config.getString("token");
+		}
 	}
 	
 	public static String getPrefix() {
