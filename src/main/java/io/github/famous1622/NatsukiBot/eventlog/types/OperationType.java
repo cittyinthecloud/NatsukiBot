@@ -5,7 +5,9 @@ public enum OperationType {
 	REFUSECOMMAND ("RefuseCommand"),
 	RECIEVEDM ("RecieveDM"),
 	RESTOREROLES ("RestoreRoles"),
-	STASHROLES ("StashRoles");
+	STASHROLES ("StashRoles"),
+	REMOVEGULAG ("RemoveGulag");
+	
 	private String readableName;
 	
 	OperationType(String readableName) {

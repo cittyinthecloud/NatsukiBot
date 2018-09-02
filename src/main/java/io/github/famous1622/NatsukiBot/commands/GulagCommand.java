@@ -49,7 +49,7 @@ public class GulagCommand implements Command {
 				Main.eventLog.logAction(new Action().withType(ActionType.GULAGUSER)
 												  .withResponsible(event.getAuthor())
 												  .withTarget(member.getUser())
-												  .withArguments(String.join(" ", arguments.subList(2, arguments.size()))));
+								  				  .withArguments(String.join(" ", arguments.subList(2, arguments.size()))));
 			}
 		}
 	}

@@ -43,4 +43,8 @@ public class BotConfig {
 	public static SheetsConfig getSheetsConfig() {
 		return new SheetsConfig(config.getString("sheets.id"), config.getString("sheets.action"), config.getString("sheets.operation"));
 	}
+
+	public static String getLogId() {
+		return config.getString("discord.id");
+	}
 }

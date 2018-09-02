@@ -12,16 +12,17 @@ import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
 import io.github.famous1622.NatsukiBot.commands.DisableRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.GulagCommand;
 import io.github.famous1622.NatsukiBot.commands.HelpCommand;
+import io.github.famous1622.NatsukiBot.commands.IPCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleSelfAssignToggleCommand;
 import io.github.famous1622.NatsukiBot.commands.UngulagCommand;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.eventlog.ConsoleEventLogger;
+import io.github.famous1622.NatsukiBot.eventlog.DiscordEventLogger;
 import io.github.famous1622.NatsukiBot.eventlog.IEventLogger;
+import io.github.famous1622.NatsukiBot.eventlog.TeeEventLogger;
 import io.github.famous1622.NatsukiBot.listeners.ComedyDarkListener;
 import io.github.famous1622.NatsukiBot.listeners.CommandListener;
-import io.github.famous1622.NatsukiBot.listeners.ServerJoinListener;
-import io.github.famous1622.NatsukiBot.listeners.ServerLeaveListener;
 import io.github.famous1622.NatsukiBot.listeners.ServerSuggestionsListener;
 import io.github.famous1622.NatsukiBot.managers.GulagManager;
 import io.github.famous1622.NatsukiBot.types.GulagState;
@@ -41,7 +42,7 @@ public class Main {
 	
 	public static Guild guild;
 	
-	public static IEventLogger eventLog = new ConsoleEventLogger();
+	public static IEventLogger eventLog = new TeeEventLogger(new ConsoleEventLogger(), new DiscordEventLogger());
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
 		jda = new JDABuilder(AccountType.BOT)
@@ -49,8 +50,8 @@ public class Main {
 				.addEventListener(new CommandListener())
 				.addEventListener(new ComedyDarkListener())
 				.addEventListener(new ServerSuggestionsListener())
-				.addEventListener(new ServerJoinListener())
-			    .addEventListener(new ServerLeaveListener())
+				//.addEventListener(new ServerJoinListener())
+			    //.addEventListener(new ServerLeaveListener())
 				.buildBlocking();
 		
 		gson = new GsonBuilder().setPrettyPrinting()
@@ -65,7 +66,8 @@ public class Main {
 		CommandListener.addCommand(new GulagCommand());
 		CommandListener.addCommand(new UngulagCommand());
 		CommandListener.addCommand(new HelpCommand());
-				
+		CommandListener.addCommand(new IPCommand());		
+		
 		GulagManager.getManager(jda).reload();
 		guild = jda.getGuildById(BotConfig.getGuildId());
 		jda.getPresence().setGame(Game.watching("Doki Doki Modding Club!"));

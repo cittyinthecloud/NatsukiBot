@@ -23,6 +23,10 @@ public class CommandListener extends ListenerAdapter{
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
+//		if (event.getChannel().getId() != "378127658757783564" && !event.isFromType(ChannelType.PRIVATE)) {
+//			return;
+//		}
+//		
 //		if (event.isFromType(ChannelType.PRIVATE)) {
 //			return;
 //		}

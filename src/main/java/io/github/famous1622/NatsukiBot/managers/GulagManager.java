@@ -1,7 +1,12 @@
 package io.github.famous1622.NatsukiBot.managers;
 
+import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.data.GulagData;
+import io.github.famous1622.NatsukiBot.eventlog.types.Action;
+import io.github.famous1622.NatsukiBot.eventlog.types.ActionType;
+import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
+import io.github.famous1622.NatsukiBot.eventlog.types.OperationType;
 import io.github.famous1622.NatsukiBot.types.GulagState;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Member;
@@ -47,6 +52,9 @@ public class GulagManager {
 					member.getGuild().getController().modifyMemberRoles(member, state.roles)
 													 .reason("Ungulaging member")
 													 .queue();
+					Main.eventLog.logOperation(new Operation(this).withType(OperationType.REMOVEGULAG)
+																  .withParty(member.getUser())
+																  .withData(""));
 					gulags.remove(member.getUser());
 				} else if (!inActualGulag && state.isGulaged()) {
 					state.roles = member.getRoles();
