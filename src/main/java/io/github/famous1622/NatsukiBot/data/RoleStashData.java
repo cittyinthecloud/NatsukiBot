@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +24,13 @@ import net.dv8tion.jda.core.entities.User;
 public class RoleStashData {
 	
 	private transient static RoleStashData theOne = null;
-	private static final String path = "rrconfig.json";
-	
-	private transient Map<String,List<Role>> stash = new HashMap<String,List<Role>>();
+	private static final String path = "rolestash.json";
 
 	private JDA jda;
 	
 	private RoleStashData(JDA jda) {
 		super();
 		this.jda = jda;
-		loadFromDisk();
 	}
 	
 	public static RoleStashData getConfig(JDA jda) {
@@ -42,8 +40,8 @@ public class RoleStashData {
 		return theOne;
 	}
 	
-	public void saveToDisk() {
-		JsonArray stashData = new JsonArray();
+	public void saveToDisk(Map<String, List<Role>> stash) {
+		 JsonArray stashData = new JsonArray();
 		 stash.forEach((user,rolelist) -> {
 			JsonObject entryObj = new JsonObject();
 			JsonArray JSON_rolelist = new JsonArray();
@@ -59,9 +57,10 @@ public class RoleStashData {
 		}
 	}
 	
-	public void loadFromDisk() {
+	public Map<String, List<Role>> loadFromDisk() {
+		final Map<String, List<Role>> stash = new HashMap<String,List<Role>>();
 		try (JsonReader reader = new JsonReader(new FileReader(path))) {
-			this.stash.clear();
+			stash.clear();
 			JsonArray stashData = new JsonParser().parse(reader).getAsJsonArray();
 			stashData.forEach((entryElem) -> {
 				JsonObject entryObj = entryElem.getAsJsonObject();
@@ -69,30 +68,35 @@ public class RoleStashData {
 				JsonArray JSON_rolelist = entryObj.getAsJsonArray("rolelist");
 				List<Role> rolelist = new ArrayList<Role>();
 				JSON_rolelist.forEach((roleId) -> rolelist.add(jda.getRoleById(roleId.getAsString())));
-				this.stash.put(user, rolelist);
+				stash.put(user, rolelist);
 			});
 		} catch (FileNotFoundException e) {
-			System.out.println("Role stash not found");
+			saveToDisk(stash);
+			return Collections.emptyMap();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return Collections.emptyMap();
 		}
+		return stash;
 	}
 
 	public void put(User user, List<Role> roles) {
-		this.stash.put(user.getId(), roles);
-		saveToDisk();
+		Map<String, List<Role>> stash = loadFromDisk();
+		stash.put(user.getId(), roles);
+		saveToDisk(stash);
 	}
 
 	public List<Role> get(User user) {
-		return this.stash.get(user.getId());
+		return loadFromDisk().get(user.getId());
 	}
 
 	public boolean containsKey(User user) {
-		return this.stash.containsKey(user.getId());
+		return loadFromDisk().containsKey(user.getId());
 	}
 	
 	public void remove(User user) {
-		this.stash.remove(user.getId());
-		saveToDisk();
+		Map<String, List<Role>> stash = loadFromDisk();
+		stash.remove(user.getId());
+		saveToDisk(stash);
 	}
 }

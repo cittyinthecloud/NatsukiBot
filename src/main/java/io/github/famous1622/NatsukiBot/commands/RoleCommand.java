@@ -3,7 +3,9 @@ package io.github.famous1622.NatsukiBot.commands;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.github.famous1622.NatsukiBot.Constants;
 import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.data.SelfAssignableRolesData;
 import io.github.famous1622.NatsukiBot.eventlog.types.Action;
 import io.github.famous1622.NatsukiBot.eventlog.types.ActionType;
@@ -55,7 +57,13 @@ public class RoleCommand implements Command {
 				}
 				event.getChannel().sendMessage("Added role: "+role.getName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
+					if(BotConfig.getEmbeds().containsKey(role.getName())) {
+						event.getAuthor().openPrivateChannel().queue(pchannel -> {
+							pchannel.sendMessage(BotConfig.getEmbeds().get(role.getName())).queue();
+						});
+					}
 				});
+				
 			}
 		}
 
