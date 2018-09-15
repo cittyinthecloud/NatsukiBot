@@ -35,7 +35,14 @@ public class IPCommand implements Command {
 			whatismyip = new URL("http://checkip.amazonaws.com");
 			in = new BufferedReader(new InputStreamReader(
 	                whatismyip.openStream()));
-			event.getChannel().sendMessage(in.readLine());
+			final BufferedReader in2 = in;
+			event.getAuthor().openPrivateChannel().queue(pchannel -> {
+				try {
+					pchannel.sendMessage(in2.readLine()).queue();
+				} catch (IOException e) {
+					pchannel.sendMessage("Something went wrong grabbing the IP, sorry!").queue();
+				}
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

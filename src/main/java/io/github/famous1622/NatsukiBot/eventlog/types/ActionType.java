@@ -4,7 +4,8 @@ public enum ActionType {
 	GULAGUSER ("GulagUser"),
 	UNGULAGUSER ("UngulagUser"),
 	SELFASSIGN ("SelfAssign"),
-	SELFUNASSIGN ("SelfUnassign");
+	SELFUNASSIGN ("SelfUnassign"),
+	SENTDM ("SentDM");
 	
 	private String readableName;
 	
