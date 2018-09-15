@@ -3,8 +3,6 @@ package io.github.famous1622.NatsukiBot.managers;
 import io.github.famous1622.NatsukiBot.Main;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.data.GulagData;
-import io.github.famous1622.NatsukiBot.eventlog.types.Action;
-import io.github.famous1622.NatsukiBot.eventlog.types.ActionType;
 import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
 import io.github.famous1622.NatsukiBot.eventlog.types.OperationType;
 import io.github.famous1622.NatsukiBot.types.GulagState;
