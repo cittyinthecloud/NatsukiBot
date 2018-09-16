@@ -10,7 +10,6 @@ import io.github.famous1622.NatsukiBot.eventlog.types.Action;
 import io.github.famous1622.NatsukiBot.eventlog.types.ActionType;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.types.PrivilegeLevel;
-import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
@@ -51,9 +50,7 @@ public class RoleCommand implements Command {
 												  .withResponsible(event.getAuthor())
 												  .withSelfTarget()
 												  .withArguments(arg));
-				if(event.isFromType(ChannelType.TEXT)) {
-					event.getMessage().delete().queue();
-				}
+
 				event.getChannel().sendMessage("Added role: "+role.getName()).queue((message) -> {
 					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
 					if(BotConfig.getEmbeds().containsKey(role.getName())) {

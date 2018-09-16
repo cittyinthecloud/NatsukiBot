@@ -52,6 +52,11 @@ public class CommandListener extends ListenerAdapter{
 					if (BotUtils.memberHasPrivilege(member, command.getRequiredLevel())) {
 						if(!command.mustBePublic() || !event.isFromType(ChannelType.PRIVATE)) {
 							command.onCommand(event,arguments);
+							
+							if (event.isFromType(ChannelType.TEXT)) {
+								event.getMessage().delete().queue();
+							}
+							
 							Main.eventLog.logOperation(new Operation(this).withType(OperationType.RUNCOMMAND)
 																		.withParty(event.getAuthor())
 																		.withData(event.getMessage().getContentDisplay()));

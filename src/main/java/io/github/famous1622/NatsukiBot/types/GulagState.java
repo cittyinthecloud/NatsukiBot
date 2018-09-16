@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.entities.Role;
 public class GulagState {
 	public long unGulagTime = 0;
 	public List<Role> roles = new ArrayList<Role>();
+	public String reason = "[No Reason]";
 	
 	public boolean isGulaged() {
 		return unGulagTime > System.currentTimeMillis();

@@ -16,7 +16,7 @@ public class GulagManager {
 	private GulagData gulags = GulagData.getGulagData();
 	private JDA jda;
 	
-	public void addGulag(User user, long milliseconds) {
+	public void addGulag(User user, long milliseconds, String reason) {
 		if(!gulags.containsKey(user)) {
 			gulags.put(user, new GulagState());
 		}
@@ -27,6 +27,7 @@ public class GulagManager {
 			state.unGulagTime = System.currentTimeMillis() + milliseconds;
 		}
 		
+		state.reason = reason;
 		sync();
 	}
 	
