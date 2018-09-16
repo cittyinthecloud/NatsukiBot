@@ -56,13 +56,11 @@ public class CommandListener extends ListenerAdapter{
 																		.withParty(event.getAuthor())
 																		.withData(event.getMessage().getContentDisplay()));
 						} else {
-							command.onCommand(event,arguments);
 							Main.eventLog.logOperation(new Operation(this).withType(OperationType.REFUSECOMMAND)
 																		.withParty(event.getAuthor())
 																		.withData("Public command attempted in a private context: " + event.getMessage().getContentDisplay()));
 						}
 					} else {
-						command.onCommand(event,arguments);
 						Main.eventLog.logOperation(new Operation(this).withType(OperationType.REFUSECOMMAND)
 																	.withParty(event.getAuthor())
 																	.withData("Command attempted with inadequate permission: " + event.getMessage().getContentDisplay()));
