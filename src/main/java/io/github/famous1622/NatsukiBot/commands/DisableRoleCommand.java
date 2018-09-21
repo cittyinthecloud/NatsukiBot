@@ -23,13 +23,9 @@ public class DisableRoleCommand implements Command {
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		RoleCommand.commandDisabled = !RoleCommand.commandDisabled;
 		if (RoleCommand.commandDisabled) {
-			event.getChannel().sendMessage("Disabled $iam").queue((message) -> {
-				message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-			});
+			event.getChannel().sendMessage("Disabled $iam").queue(message -> message.delete().queueAfter(10000, TimeUnit.MILLISECONDS));
 		} else {
-			event.getChannel().sendMessage("Enabled $iam").queue((message) -> {
-				message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-			});
+			event.getChannel().sendMessage("Enabled $iam").queue(message -> message.delete().queueAfter(10000, TimeUnit.MILLISECONDS));
 		}
 	}
 
@@ -40,6 +36,6 @@ public class DisableRoleCommand implements Command {
 
 	@Override
 	public boolean mustBePublic() {
-		return false;
+		return true;
 	}
 }

@@ -28,24 +28,25 @@ public class GulagCommand implements Command {
 	public void onCommand(MessageReceivedEvent event, List<String> arguments) {
 		List<Member> mentions = event.getMessage().getMentionedMembers();
 		if (mentions.size()!=1 || arguments.size()<3) {
-			event.getChannel().sendMessage("Syntax: `$gulag @User Xh [Reason]`").queue((message) -> {
-				message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-			});
+			
+			event.getChannel().sendMessage("Syntax: `$gulag @User Xh [Reason]`").queue(message -> message.delete().queueAfter(10000, TimeUnit.MILLISECONDS));
+			
 		} else {
 			String mention = arguments.get(0);
 			String time = arguments.get(1);
 			if (!mention.startsWith("<@") || !time.endsWith("h")) {
-				event.getChannel().sendMessage("Syntax: `$gulag @User Xh [Reason]`").queue((message) -> {
-					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-				});
+			
+				event.getChannel().sendMessage("Syntax: `$gulag @User Xh [Reason]`").queue(message -> message.delete().queueAfter(10000, TimeUnit.MILLISECONDS));
+				
 			} else {
 				Member member = mentions.get(0);
 				time = time.substring(0, time.length()-1);
 				long gulagtime = Long.parseLong(time)*60*60*1000;
-				GulagManager.getManager(member.getJDA()).addGulag(member.getUser(), gulagtime);
-				event.getChannel().sendMessage("Gulaged "+member.getEffectiveName()).queue((message) -> {
-					message.delete().queueAfter(10000, TimeUnit.MILLISECONDS);
-				});
+				
+				GulagManager.getManager(member.getJDA()).addGulag(member.getUser(), gulagtime, String.join(" ", arguments.subList(2, arguments.size())));
+				
+				event.getChannel().sendMessage("Gulaged "+member.getEffectiveName()).queue(message -> message.delete().queueAfter(10000, TimeUnit.MILLISECONDS));
+				
 				Main.eventLog.logAction(new Action().withType(ActionType.GULAGUSER)
 												  .withResponsible(event.getAuthor())
 												  .withTarget(member.getUser())
@@ -56,7 +57,7 @@ public class GulagCommand implements Command {
 
 	@Override
 	public String getHelpMessage() {
-		return "gulags a member. Syntax: $gulag @Member Xh";
+		return "gulags a member. Syntax: $gulag @Member Xh [Reason]";
 	}
 
 	@Override

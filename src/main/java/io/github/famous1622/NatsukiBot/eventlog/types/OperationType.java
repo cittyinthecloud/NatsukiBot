@@ -6,7 +6,8 @@ public enum OperationType {
 	RECIEVEDM ("RecieveDM"),
 	RESTOREROLES ("RestoreRoles"),
 	STASHROLES ("StashRoles"),
-	REMOVEGULAG ("RemoveGulag");
+	REMOVEGULAG ("RemoveGulag"),
+	PURGEMESSAGES ("PurgeMessages");
 	
 	private String readableName;
 	

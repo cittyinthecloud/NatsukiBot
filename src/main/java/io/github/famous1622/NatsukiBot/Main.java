@@ -8,14 +8,19 @@ import javax.security.auth.login.LoginException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.github.famous1622.NatsukiBot.commands.BotPurgeCommand;
 import io.github.famous1622.NatsukiBot.commands.ComedyDarkCommand;
+import io.github.famous1622.NatsukiBot.commands.CommPurgeCommand;
 import io.github.famous1622.NatsukiBot.commands.DisableRoleCommand;
 import io.github.famous1622.NatsukiBot.commands.GulagCommand;
 import io.github.famous1622.NatsukiBot.commands.HelpCommand;
 import io.github.famous1622.NatsukiBot.commands.IPCommand;
+import io.github.famous1622.NatsukiBot.commands.PingCommand;
+import io.github.famous1622.NatsukiBot.commands.PurgeCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleInfoCommand;
 import io.github.famous1622.NatsukiBot.commands.RoleSelfAssignToggleCommand;
+import io.github.famous1622.NatsukiBot.commands.SayCommand;
 import io.github.famous1622.NatsukiBot.commands.UngulagCommand;
 import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.eventlog.ConsoleEventLogger;
@@ -71,6 +76,11 @@ public class Main {
 		CommandListener.addCommand(new HelpCommand());
 		CommandListener.addCommand(new IPCommand());	
 		CommandListener.addCommand(new RoleInfoCommand());
+		CommandListener.addCommand(new PurgeCommand());
+		CommandListener.addCommand(new BotPurgeCommand());
+		CommandListener.addCommand(new CommPurgeCommand());
+		CommandListener.addCommand(new PingCommand());
+		CommandListener.addCommand(new SayCommand());
 		
 		GulagManager.getManager(jda).reload();
 		guild = jda.getGuildById(BotConfig.getGuildId());
