@@ -12,7 +12,6 @@ import io.github.famous1622.NatsukiBot.eventlog.types.OperationType;
 import io.github.famous1622.NatsukiBot.types.Command;
 import io.github.famous1622.NatsukiBot.utils.BotUtils;
 import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -23,16 +22,14 @@ public class CommandListener extends ListenerAdapter{
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
-//		if (event.getChannel().getId() != "378127658757783564" && !event.isFromType(ChannelType.PRIVATE)) {
-//			return;
-//		}
-//		
-//		if (event.isFromType(ChannelType.PRIVATE)) {
-//			return;
-//		}
-
-		Guild guild = Main.guild;
-		Member member = guild.getMember(event.getAuthor());
+		Member member;
+		
+		if (event.isFromType(ChannelType.PRIVATE)) {
+			member = event.getJDA().getGuildById(BotConfig.getGuildId()).getMember(event.getAuthor());
+		} else {
+			member = event.getMember();
+		}
+		
 		Message message = event.getMessage();
 		String content = message.getContentRaw();
 		

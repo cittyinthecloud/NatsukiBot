@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import io.github.famous1622.NatsukiBot.Main;
+import io.github.famous1622.NatsukiBot.config.BotConfig;
 import io.github.famous1622.NatsukiBot.data.RoleStashData;
 import io.github.famous1622.NatsukiBot.eventlog.types.Operation;
 import io.github.famous1622.NatsukiBot.eventlog.types.OperationType;
@@ -31,7 +32,7 @@ public class ServerJoinListener extends ListenerAdapter
 			event.getGuild().getController().addRolesToMember(member, BotUtils.getModifiableRoles(roles))
 											.reason("Restore pre-leave roles")
 											//to update Gulags (if they were gulaged, they're null now, this reloads that)
-											.queue((v) -> GulagManager.getManager(user.getJDA()).reload());
+											.queue((v) -> GulagManager.getManager(user.getJDA()).sync());
 			rrconfig.remove(user);
 			
 			Main.eventLog.logOperation(new Operation(this).withType(OperationType.RESTOREROLES)
@@ -47,10 +48,10 @@ public class ServerJoinListener extends ListenerAdapter
 						    .build());
 				});
 			} else {			
-			//user.openPrivateChannel().queue(pchannel -> pchannel.sendMessage(BotConfig.getWelcomeDM()).queue());
-			//user.openPrivateChannel().queue(channel ->{
-			//	channel.sendMessage(new EmbedBuilder());
-			//});
+			user.openPrivateChannel().queue(pchannel -> pchannel.sendMessage(BotConfig.getWelcomeDM()).queue());
+			user.openPrivateChannel().queue(channel ->{
+				channel.sendMessage(BotConfig.getWelcomeDM());
+			});
 			System.out.println("complete");
 		}
 	}

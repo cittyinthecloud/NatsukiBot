@@ -24,6 +24,6 @@ public class ServerLeaveListener extends ListenerAdapter {
 		Main.eventLog.logOperation(new Operation(this).withType(OperationType.STASHROLES)
 													.withParty(member.getUser())
 													.withData(LoggingUtils.roleListToLogData(roles)));
-		GulagManager.getManager(member.getJDA()).reload();		
+		GulagManager.getManager(member.getJDA()).sync();	
 	}
 }

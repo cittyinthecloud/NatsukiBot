@@ -41,8 +41,8 @@ public class BotConfig {
 		return config.getString("eheheId");
 	}
 	
-	public static String getWelcomeDM() {
-		return config.getString("welcomeDm");
+	public static MessageEmbed getWelcomeDM() {
+		return BotUtils.unPackEmbed(config.getString("welcomeDm"));
 	}
 
 	public static String getWelcomeBack() {
@@ -69,12 +69,16 @@ public class BotConfig {
 				ConfigObject config_EmbedMap = config.getObject("embeds");
 				config_EmbedMap.forEach((name, conf_Embed) -> {
 					embedMap.put(name, BotUtils.unPackEmbed((String) conf_Embed.unwrapped()));
-				});
+				}); 
 			} catch (ConfigException.Missing e) {
 				logger.warn("No embeds object in config");
 			}
 			embeds = Collections.unmodifiableMap(embedMap);
 		}
 		return embeds;
+	}
+	
+	public static String getProbationId() {
+		return config.getString("probationId");
 	}
 }

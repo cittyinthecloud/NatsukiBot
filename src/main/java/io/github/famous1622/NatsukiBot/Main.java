@@ -62,6 +62,8 @@ public class Main {
 			    .addEventListener(new ServerLeaveListener())
 				.buildBlocking();
 		
+		guild = jda.getGuildById(BotConfig.getGuildId());
+		
 		gson = new GsonBuilder().setPrettyPrinting()
 		 .registerTypeAdapter(User.class, new UserSerializer(jda))
 		 .registerTypeAdapter(GulagState.class, new GulagStateSerializer(jda))
@@ -82,8 +84,8 @@ public class Main {
 		CommandListener.addCommand(new PingCommand());
 		CommandListener.addCommand(new SayCommand());
 		
-		GulagManager.getManager(jda).reload();
-		guild = jda.getGuildById(BotConfig.getGuildId());
+		GulagManager.getManager(jda).syncRoles();
+		
 		jda.getPresence().setGame(Game.watching("Doki Doki Modding Club!"));
 		
 		Timer gulagTimer = new Timer(true);
